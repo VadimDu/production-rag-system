@@ -15,9 +15,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """Application settings with validation"""
     
-    # Database settings - use absolute path to ensure consistency across directories
+    # Database settings - use user home directory for portability
     persist_dir: str = Field(
-        default=str(Path.home() / "biotax/analysis" / "chroma_db_test"), 
+        default=str(Path.home() / "production_rag_system" / "chroma_db"), 
         env="RAG_PERSIST_DIR"
     )
     chunk_size_threshold: int = Field(default=1200, ge=100, le=10000)
@@ -41,10 +41,10 @@ class Settings(BaseSettings):
     max_query_length: int = Field(default=2000, ge=10, le=10000)
     max_document_size: int = Field(default=10_000_000, ge=1000, le=100_000_000)
     
-    # Logging settings - use absolute path to ensure consistency across directories
+    # Logging settings - use user home directory for portability
     log_level: str = Field(default="INFO", env="RAG_LOG_LEVEL")
     log_file: str = Field(
-        default=str(Path.home() / "biotax/analysis" / "rag_system.log"), 
+        default=str(Path.home() / "production_rag_system" / "rag_system.log"), 
         env="RAG_LOG_FILE"
     )
     
@@ -78,7 +78,7 @@ class Settings(BaseSettings):
         """Ensure persist directory exists or can be created"""
         # Convert to absolute path if relative
         if not os.path.isabs(v):
-            v = str(Path.home() / "biotax/analysis" / v)
+            v = str(Path.home() / "production_rag_system" / v)
         
         if not os.path.exists(v):
             try:
@@ -92,7 +92,7 @@ class Settings(BaseSettings):
         """Ensure log file directory exists"""
         # Convert to absolute path if relative
         if not os.path.isabs(v):
-            v = str(Path.home() / "biotax/analysis" / v)
+            v = str(Path.home() / "production_rag_system" / v)
         
         log_path = Path(v)
         log_path.parent.mkdir(parents=True, exist_ok=True)

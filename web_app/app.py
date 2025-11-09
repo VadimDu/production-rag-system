@@ -11,16 +11,31 @@ This is a web interface for the Production RAG System that allows users to:
 import streamlit as st
 import sys
 import os
-from pathlib import Path
 import time
 import json
+from pathlib import Path
 
-# Add the parent directory to the path so we can import the module
-#sys.path.append(str(Path(__file__).parent.parent))
-production_rag_system_path = Path.home()/"biotax/analysis"
-sys.path.append(str(production_rag_system_path))
-
-from production_rag_system import create_production_rag_system, QueryRequest, Settings
+# Import the production_rag_system package directly
+# This will work when installed via pip or when running from the source directory
+try:
+    from production_rag_system import create_production_rag_system, QueryRequest, Settings
+except ImportError:
+    # Fallback for when running directly from the source directory
+    # This handles the case when running: streamlit run web_app/app.py
+    # We need to add the parent directory (where production_rag_system package is located)
+    app_dir = os.path.dirname(os.path.abspath(__file__))
+    source_root = os.path.dirname(app_dir)  # web_app -> production_rag_system
+    parent_of_source = os.path.dirname(source_root)  # production_rag_system -> parent
+    if parent_of_source not in sys.path:
+        sys.path.insert(0, parent_of_source)
+    try:
+        from production_rag_system import create_production_rag_system, QueryRequest, Settings
+    except ImportError:
+        # If that still doesn't work, try adding the current working directory
+        cwd = os.getcwd()
+        if cwd not in sys.path:
+            sys.path.insert(0, cwd)
+        from production_rag_system import create_production_rag_system, QueryRequest, Settings
 
 
 # Cache expensive operations
@@ -738,7 +753,7 @@ def settings_page():
                     embedding_batch_size=embedding_batch_size if st.session_state.show_advanced_config else 32,
                     default_k=default_k,
                     log_level=log_level if st.session_state.show_advanced_config else "INFO",
-                    log_file=log_file if log_file.strip() else str(Path.home() / "biotax/analysis/rag_system.log")
+                    log_file=log_file if log_file.strip() else str(Path.home() / "production_rag_system/rag_system.log")
                 )
                 
                 # Store in session state
