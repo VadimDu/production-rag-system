@@ -1,0 +1,11 @@
+include README.md
+include LICENSE
+include pyproject.toml
+recursive-include production_rag_system *.py
+recursive-include production_rag_system/examples *.py *.md
+recursive-include production_rag_system/web_app *.py *.txt *.md
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude .git*
