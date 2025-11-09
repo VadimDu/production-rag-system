@@ -16,14 +16,14 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 # Import from modular components
-from ..config.settings import Settings
-from ..logging.config import setup_logging
-from ..monitoring.performance import PerformanceMonitor
-from ..processing.documents import DocumentProcessor
-from ..retrieval.retrievers import RetrieverFactory
-from ..retrieval.memory import MemoryManager
-from ..validation.models import QueryRequest
-from ..exceptions.base import (
+from production_rag_system.config.settings import Settings
+from production_rag_system.logger_utils.config import setup_logging
+from production_rag_system.monitoring.performance import PerformanceMonitor
+from production_rag_system.processing.documents import DocumentProcessor
+from production_rag_system.retrieval.retrievers import RetrieverFactory
+from production_rag_system.retrieval.memory import MemoryManager
+from production_rag_system.validation.models import QueryRequest
+from production_rag_system.exceptions.base import (
     RAGSystemError,
     ConfigurationError,
     DocumentProcessingError,
@@ -33,7 +33,7 @@ from ..exceptions.base import (
     handle_errors,
     retry_on_failure
 )
-from .device import setup_device
+from production_rag_system.core.device import setup_device
 
 
 class ProductionRAGSystem:

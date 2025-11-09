@@ -19,7 +19,7 @@ from .exceptions.base import (
     handle_errors,
     retry_on_failure
 )
-from .logging.config import setup_logging, get_logger
+from .logger_utils.config import setup_logging, get_logger
 from .monitoring.performance import PerformanceMetrics, PerformanceMonitor
 from .processing.documents import DocumentProcessor
 from .retrieval.retrievers import RetrieverFactory

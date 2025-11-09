@@ -7,7 +7,7 @@ This module provides structured logging configuration and utilities.
 import logging
 from typing import Optional
 
-from ..config.settings import Settings
+from production_rag_system.config.settings import Settings
 
 
 def setup_logging(settings: Optional[Settings] = None) -> logging.Logger:
@@ -20,7 +20,7 @@ def setup_logging(settings: Optional[Settings] = None) -> logging.Logger:
         Configured logger instance
     """
     if settings is None:
-        from ..config.settings import Settings
+        from production_rag_system.config.settings import Settings
         settings = Settings()
     
     logger = logging.getLogger(__name__)

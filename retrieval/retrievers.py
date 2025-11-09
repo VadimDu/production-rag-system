@@ -16,9 +16,9 @@ from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 
-from ..config.settings import Settings
-from ..exceptions.base import LLMError, ValidationError, handle_errors
-from .memory import MemoryManager
+from production_rag_system.config.settings import Settings
+from production_rag_system.exceptions.base import LLMError, ValidationError, handle_errors
+from production_rag_system.retrieval.memory import MemoryManager
 
 logger = logging.getLogger(__name__)
 

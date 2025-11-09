@@ -11,7 +11,7 @@ from typing import Union, Optional
 
 from pydantic import BaseModel, Field, validator
 
-from ..exceptions.base import ValidationError
+from production_rag_system.exceptions.base import ValidationError
 
 
 class QueryRequest(BaseModel):

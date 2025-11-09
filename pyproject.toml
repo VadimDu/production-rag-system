@@ -13,14 +13,14 @@ authors = [{name = "Vadim-Dani Dubinsky", email = "dani.dubinsky@gmail.com"}]
 requires-python = ">=3.8"
 
 dependencies = [
-    "langchain>=0.1.0",
-    "langchain-community>=0.0.20",
+    "langchain>=0.2.0",
+    "langchain-community>=0.2.0",
     "langchain-chroma>=0.1.0",
     "chromadb>=0.4.0",
     "sentence-transformers>=2.2.0",
     "pydantic>=2.0.0",
     "pydantic-settings>=2.0.0",
-    "pypdf2>=3.0.0",
+    "pypdf>=3.0.0",  # Updated to use pypdf instead of pypdf2
     "python-docx>=0.8.11",
     "tenacity>=8.0.0",
     "torch>=2.0.0",
@@ -39,3 +39,4 @@ rag-web = "production_rag_system.web_app.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["production_rag_system*"]
