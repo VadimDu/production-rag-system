@@ -16,12 +16,12 @@ from langchain_community.document_loaders import (
     UnstructuredMarkdownLoader,
     Docx2txtLoader
 )
-from langchain.docstore.document import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from production_rag_system.config.settings import Settings
-from production_rag_system.exceptions.base import DocumentProcessingError, handle_errors
-from production_rag_system.validation.models import DocumentValidator
+from ..config.settings import Settings
+from ..exceptions.base import DocumentProcessingError, handle_errors
+from ..validation.models import DocumentValidator
 
 logger = logging.getLogger(__name__)
 

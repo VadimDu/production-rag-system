@@ -17,25 +17,29 @@ from pathlib import Path
 
 # Import the production_rag_system package directly
 # This will work when installed via pip or when running from the source directory
-try:
-    from production_rag_system import create_production_rag_system, QueryRequest, Settings
-except ImportError:
-    # Fallback for when running directly from the source directory
-    # This handles the case when running: streamlit run web_app/app.py
-    # We need to add the parent directory (where production_rag_system package is located)
-    app_dir = os.path.dirname(os.path.abspath(__file__))
-    source_root = os.path.dirname(app_dir)  # web_app -> production_rag_system
-    parent_of_source = os.path.dirname(source_root)  # production_rag_system -> parent
-    if parent_of_source not in sys.path:
-        sys.path.insert(0, parent_of_source)
-    try:
-        from production_rag_system import create_production_rag_system, QueryRequest, Settings
-    except ImportError:
-        # If that still doesn't work, try adding the current working directory
-        cwd = os.getcwd()
-        if cwd not in sys.path:
-            sys.path.insert(0, cwd)
-        from production_rag_system import create_production_rag_system, QueryRequest, Settings
+# try:
+#     from production_rag_system import create_production_rag_system, QueryRequest, Settings
+# except ImportError:
+#     # Fallback for when running directly from the source directory
+#     # This handles the case when running: streamlit run web_app/app.py
+#     # We need to add the parent directory (where production_rag_system package is located)
+#     app_dir = os.path.dirname(os.path.abspath(__file__))
+#     source_root = os.path.dirname(app_dir)  # web_app -> production_rag_system
+#     parent_of_source = os.path.dirname(source_root)  # production_rag_system -> parent
+#     if parent_of_source not in sys.path:
+#         sys.path.insert(0, parent_of_source)
+#     try:
+#         from production_rag_system import create_production_rag_system, QueryRequest, Settings
+#     except ImportError:
+#         # If that still doesn't work, try adding the current working directory
+#         cwd = os.getcwd()
+#         if cwd not in sys.path:
+#             sys.path.insert(0, cwd)
+#         from production_rag_system import create_production_rag_system, QueryRequest, Settings
+
+from production_rag_system.validation.models import QueryRequest
+from production_rag_system.config.settings import Settings
+from production_rag_system.core.rag_system import create_production_rag_system
 
 
 # Cache expensive operations

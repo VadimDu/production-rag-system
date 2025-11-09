@@ -7,7 +7,7 @@ This module provides document retrieval utilities and retriever creation.
 import logging
 from typing import Dict, Any, Optional, Union, List
 
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 from langchain_community.chat_models import ChatOpenAI
 from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
@@ -16,9 +16,9 @@ from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 
-from production_rag_system.config.settings import Settings
-from production_rag_system.exceptions.base import LLMError, ValidationError, handle_errors
-from production_rag_system.retrieval.memory import MemoryManager
+from ..config.settings import Settings
+from ..exceptions.base import LLMError, ValidationError, handle_errors
+from ..retrieval.memory import MemoryManager
 
 logger = logging.getLogger(__name__)
 
