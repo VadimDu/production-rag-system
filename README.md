@@ -19,19 +19,13 @@ A modular, production-ready Retrieval-Augmented Generation (RAG) system with com
 ### Standard Installation
 
 ```bash
-pip install production-rag-system
-```
-
-### Development Installation
-
-```bash
-pip install production-rag-system[dev]
+pip install git+https://github.com/VadimDu/production-rag-system.git
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/your-username/production-rag-system.git
+git clone https://github.com/VadimDu/production-rag-system.git
 cd production-rag-system
 pip install -e .
 ```
@@ -287,17 +281,17 @@ Contributions are welcome! Please read the contributing guidelines and submit a 
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/your-username/production-rag-system/issues
-- Documentation: https://github.com/your-username/production-rag-system#readme
+- GitHub Issues: https://github.com/VadimDu/production-rag-system/issues
+- Documentation: https://github.com/VadimDu/production-rag-system#readme
 
 ## Changelog
 
 ### Version 1.0.0
 - Initial release
 - Core RAG functionality
-- Web interface
 - Performance monitoring
 - Error handling and validation
 - Conversation memory
 - Document processing
 - Multiple retriever types
+- Web interface
