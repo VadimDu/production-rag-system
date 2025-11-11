@@ -12,11 +12,7 @@ A web interface for the Production RAG System that allows you to easily query yo
 
 ## Prerequisites
 
-1. Make sure you have the Production RAG System installed and working
-2. Install the web app dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Make sure you have the Production RAG System installed and working (follow the instructions from the main repository README)
 
 ## Quick Start
 
@@ -165,4 +161,4 @@ For issues related to:
 
 ## License
 
-This web app is part of the Production RAG System and follows the same license terms.
+This project is licensed under the MIT License.

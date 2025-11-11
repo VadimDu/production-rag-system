@@ -34,9 +34,6 @@ dev = [
     "pytest",
 ]
 
-[project.scripts]
-rag-web = "production_rag_system.web_app.__main__:main"
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["production_rag_system*"]
