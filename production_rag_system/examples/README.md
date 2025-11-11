@@ -79,26 +79,6 @@ python document_processing.py
 - A `documents` directory with your documents
 - Disk space for the vector database
 
-## Conversation Persistence
-
-**File**: `conversation_persistence.py`
-
-Demonstrates conversation persistence features:
-- Saving conversations to disk
-- Loading conversations from disk
-- Managing multiple conversations
-- Continuing conversations across sessions
-
-**Usage**:
-```bash
-python conversation_persistence.py
-```
-
-**Requirements**:
-- An existing vector database with documents
-- Configured LLM API
-- Disk space for saving conversations
-
 ## Advanced Retrieval
 
 **File**: `advanced_retrieval.py`
@@ -130,11 +110,7 @@ All examples require:
 
 ## Setup Instructions
 
-1. Install the Production RAG System:
-   ```bash
-   cd production_rag_system
-   pip install -r requirements.txt
-   ```
+1. Install the Production RAG System: follow the instructions from the main repository README
 
 2. Configure your environment:
    ```bash
@@ -145,7 +121,7 @@ All examples require:
    nano .env  # or use your preferred editor
    ```
 
-3. For document processing examples:
+3. For document processing examples: (these directories inc. test doc files were created already)
    ```bash
    mkdir -p examples/documents
    # Add your documents to this directory
@@ -165,19 +141,6 @@ All examples require:
    - Set `LLM_API_KEY` to your API key
    - Set `LLM_BASE_URL` to your API endpoint
    - Set `LLM_MODEL_NAME` to your preferred model
-
-## Running Examples
-
-Each example can be run independently:
-
-```bash
-# Run a specific example
-python examples/basic_usage.py
-
-# Or run from the examples directory
-cd examples
-python basic_usage.py
-```
 
 ## Customization
 

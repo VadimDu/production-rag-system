@@ -1,0 +1,5 @@
+LLM prefill vs decode stage:
+The main difference is that the prefill stage processes the entire input prompt in parallel to build a KV cache, 
+while the decode stage generates output tokens one by one, using the pre-computed KV cache. 
+Prefill is compute-bound because it performs heavy calculations on all input tokens, 
+while decode is memory-bound, relying on fast memory access to retrieve the KV cache for each new token generated.  

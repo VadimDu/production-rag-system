@@ -11,32 +11,82 @@ This example demonstrates advanced retrieval features of the Production RAG Syst
 import sys
 from pathlib import Path
 
-# Add the parent directory to the path so we can import the module
-#sys.path.append(str(Path(__file__).parent.parent))
-production_rag_system_path = Path.home()/"biotax/analysis"
-sys.path.append(str(production_rag_system_path))
-
-from production_rag_system import create_production_rag_system, Settings, QueryRequest
+from production_rag_system.validation.models import QueryRequest
+from production_rag_system.config.settings import Settings
+from production_rag_system.core.rag_system import create_production_rag_system
 
 
 def main():
     """Run advanced retrieval example"""
     print("🎯 Production RAG System - Advanced Retrieval Example")
     print("=" * 50)
+
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent.absolute()
     
     try:
         # 1. Create RAG system
         print("1. Creating RAG system...")
         settings = Settings(
-            persist_dir="./examples/chroma_db",
-            log_file="./examples/rag_system.log",
+            persist_dir=str(script_dir / "chroma_db_example"),
+            log_file=str(script_dir / "rag_system.log"),
+            chunk_size_threshold=500,
+            chunk_overlap_ratio=0.2,
             log_level="INFO"
         )
         rag = create_production_rag_system(settings)
         print("✅ RAG system created successfully")
         
-        # 2. Check system health
+         # 2. Check system health
         print("\n2. Checking system health...")
+        health = rag.get_system_health()
+        print(f"✅ System health: {health['overall']}")
+        print(f"   - Vector DB: {health['vector_db']}")
+        print(f"   - Embedding Model: {health['embedding_model']}")
+        print(f"   - LLM Connection: {health['llm_connection']}")
+        
+        #Build vector database from documents
+        print("\n3. Building vector database from documents...")
+        
+        # Define document paths (relative to script location)
+        document_paths = [
+            str(script_dir / "test_docs")  # Directory containing documents
+        ]
+        
+        # Check if documents directory exists
+        docs_dir = script_dir / "test_docs"
+        if not docs_dir.exists():
+            print(f"❌ Documents directory not found: {docs_dir}")
+            print("   Please create a 'test_docs' directory in the examples folder and add your documents")
+            print("   Supported formats: .txt, .md, .pdf, .docx")
+            return False
+        
+        # List available documents
+        available_docs = []
+        for ext in [".txt", ".md", ".pdf", ".docx"]:
+            available_docs.extend(docs_dir.glob(f"**/*{ext}"))
+        
+        if not available_docs:
+            print("❌ No documents found in the test_docs directory")
+            print(f"   Directory contents: {list(docs_dir.iterdir()) if docs_dir.exists() else 'Directory does not exist'}")
+            print("   Please add some documents (txt, md, pdf, or docx) to the examples/test_docs folder")
+            return False
+
+        # Build vector database
+        vectordb = rag.build_vector_db_from_docs(document_paths, skip_duplicates=True)
+        
+        if vectordb:
+            print("✅ Vector database built successfully")
+            
+            # Check document count
+            docs_data = rag.list_existing_documents()
+            print(f"   - Document chunks: {len(docs_data['ids'])}")
+        else:
+            print("❌ Failed to build vector database")
+            return False
+
+        # 2. Check system health
+        print("\n2. Checking system health again...")
         health = rag.get_system_health()
         if not health["overall"] or not health["vector_db"]:
             print("❌ System not ready for advanced retrieval")
@@ -233,5 +283,13 @@ def main():
 
 
 if __name__ == "__main__":
+
+    # Get the script directory for creating relative paths
+    script_dir = Path(__file__).parent.absolute()
+    
+    # Create directories relative to script location
+    (script_dir / "chroma_db_example").mkdir(parents=True, exist_ok=True)
+    (script_dir/"conversations").mkdir(parents=True, exist_ok=True)
+
     success = main()
     sys.exit(0 if success else 1)

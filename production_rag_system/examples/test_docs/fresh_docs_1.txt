@@ -1,0 +1,5 @@
+The topic of this document is Python Streamlit: is an open-source Python library designed to 
+simplify the creation and sharing of custom web applications, 
+particularly for data science, machine learning, and generative AI projects. 
+It allows developers to transform Python scripts into interactive web apps with minimal code, 
+eliminating the need for extensive web development knowledge.

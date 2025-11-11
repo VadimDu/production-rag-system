@@ -1,0 +1,6 @@
+
+    Retrieval-Augmented Generation (RAG) combines retrieval systems with generative (LLM) models.
+    RAG systems first retrieve relevant documents from a knowledge base using semantic similarity search based on vector embeddings, then generate responses.
+    This approach helps reduce hallucinations and provides more accurate, relevant and up to date factual responses.
+    Vector databases (such as ChromaDB or FAISS) are commonly used in RAG systems for efficient document retrieval.
+    

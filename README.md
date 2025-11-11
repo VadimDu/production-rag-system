@@ -1,4 +1,4 @@
-# Production RAG System
+# Production RAG System - Overview
 
 A modular, production-ready Retrieval-Augmented Generation (RAG) system with comprehensive error handling, input validation, and monitoring capabilities.
 
@@ -29,6 +29,94 @@ git clone https://github.com/VadimDu/production-rag-system.git
 cd production-rag-system
 pip install -e .
 ```
+
+## ⚠️ Important: LLM Backend Required
+
+**This RAG system requires a Language Model (LLM) backend to function.** Without a connected LLM, the system cannot process queries or generate responses.
+
+### What You Need
+
+Choose one of the following options:
+
+1. **Local LLM Server** (Recommended for privacy)
+   - **LM Studio**: Start a local server at `http://localhost:1234/v1` 
+   - **Ollama**: Run local models like `ollama serve`
+   - **Oobabooga**: Text Generation WebUI with OpenAI-compatible API
+
+2. **Cloud API Services**
+   - **OpenAI**: OpenAI API with API key
+   - **Anthropic**: Claude API with API key
+   - **Custom**: Any OpenAI-compatible API endpoint
+
+### Quick LLM Setup (LM Studio)
+
+Here's a complete step-by-step guide to get your local LLM running with LM Studio:
+
+#### Step 1: Install LM Studio
+1. Download and install [LM Studio](https://lmstudio.ai/) for your operating system
+2. Launch LM Studio after installation
+
+#### Step 2: Download a Language Model
+1. Click on the "Discover" tab in LM Studio
+2. Search for and download a recommended model such as (depending on your memory/compute):
+   - **Qwen2.5-7B-Instruct**
+   - **Llama-3.1-8B-Instruct** 
+   - **Mistral-7B-Instruct**
+   - ** **
+3. Wait for the download to complete
+
+#### Step 3: Load the Model
+1. Go to the "Chat" tab
+2. Select your downloaded model from the dropdown
+3. Click "Load" to load the model into memory (this may take a few minutes)
+4. Test the model by sending a simple message like "Hello"
+
+#### Step 4: Start the Local Server
+1. Click on the "Local Server" tab (or go to Menu → Preferences → Local Server)
+2. Set the following configuration:
+   - **Server URL**: `http://localhost:1234/v1` (default)
+   - **Model**: Select the model you loaded
+   - **Context Length**: 4096 (or higher if your model supports it)
+3. Click "Start Server"
+4. You should see "Server is running on http://localhost:1234/v1"
+
+#### Step 5: Configure the RAG System
+The system will automatically connect to `http://localhost:1234/v1` with these default settings:
+- **Model Name**: `qwen/qwen3-next-80b` (can be changed in settings)
+- **API Key**: `not-needed` (local servers don't require API keys)
+- **Base URL**: `http://localhost:1234/v1`
+
+To customize settings, either:
+- Create a `.env` file with `RAG_LLM_BASE_URL=http://localhost:1234/v1`
+- Or pass custom settings to the RAG system:
+  ```python
+  from production_rag_system import Settings, create_production_rag_system
+  
+  settings = Settings(
+      llm_base_url="http://localhost:1234/v1",
+      llm_model_name="qwen2.5-7b-instruct"  # or your loaded model name
+  )
+  rag = create_production_rag_system(settings)
+  ```
+
+#### Step 6: Verify Connection
+To test if your LLM backend is working:
+```python
+from production_rag_system import create_production_rag_system
+
+# Create system (it will connect to LM Studio automatically)
+rag = create_production_rag_system()
+
+# Check system health
+health = rag.get_system_health()
+print(f"LLM Connection: {'✅ Working' if health['llm_connection'] else '❌ Failed'}")
+```
+
+**Troubleshooting:**
+- If connection fails, ensure LM Studio's local server is running
+- Check that the server URL matches exactly (including `http://` and `/v1`)
+- Try restarting both LM Studio and your RAG system
+- Some models may have different optimal context lengths - try adjusting in LM Studio
 
 ## Quick Start
 

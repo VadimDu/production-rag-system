@@ -1,0 +1,6 @@
+
+    Artificial Intelligence (AI) is the simulation of human intelligence in machines.
+    AI systems can learn from experience (aka data), adjust to new inputs, and perform human-like tasks.
+    Machine learning is a subset of AI that enables systems to learn and improve from experience.
+    Deep learning uses neural networks with multiple layers to process complex patterns.
+    

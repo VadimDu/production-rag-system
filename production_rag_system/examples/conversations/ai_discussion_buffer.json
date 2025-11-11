@@ -1,0 +1,39 @@
+{
+  "retriever_type": "vec_semantic",
+  "memory_type": "buffer",
+  "messages": [
+    {
+      "type": "human",
+      "content": "What is artificial intelligence?"
+    },
+    {
+      "type": "ai",
+      "content": "Artificial Intelligence (AI) is the simulation of human intelligence in machines. AI systems can learn from experience (aka data), adjust to new inputs, and perform human-like tasks."
+    },
+    {
+      "type": "human",
+      "content": "What are the main types of machine learning?"
+    },
+    {
+      "type": "ai",
+      "content": "INSUFFICIENT CONTEXT"
+    },
+    {
+      "type": "human",
+      "content": "How does deep learning differ from traditional machine learning?"
+    },
+    {
+      "type": "ai",
+      "content": "Deep learning differs from traditional machine learning in that it uses neural networks with multiple layers to process complex patterns. Traditional machine learning, as a subset of AI, enables systems to learn and improve from experience, but typically relies on feature engineering and simpler models. Deep learning automates feature extraction through its layered neural networks, allowing it to handle more complex and high-dimensional data such as images, audio, and text."
+    },
+    {
+      "type": "human",
+      "content": "What are the differences between prefill vs decode stages in LLMs?"
+    },
+    {
+      "type": "ai",
+      "content": "The main difference between the prefill and decode stages in large language models (LLMs) is that the prefill stage processes the entire input prompt in parallel to build a KV cache, while the decode stage generates output tokens one by one, using the pre-computed KV cache. \n\nPrefill is compute-bound because it performs heavy calculations on all input tokens, while decode is memory-bound, relying on fast memory access to retrieve the KV cache for each new token generated."
+    }
+  ],
+  "timestamp": 1762781348.3791108
+}

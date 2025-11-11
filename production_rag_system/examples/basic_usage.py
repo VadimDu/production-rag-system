@@ -10,12 +10,9 @@ This example demonstrates the basic functionality of the Production RAG System:
 import sys
 from pathlib import Path
 
-# Add the parent directory to the path so we can import the module
-#sys.path.append(str(Path(__file__).parent.parent))
-production_rag_system_path = Path.home()/"biotax/analysis"
-sys.path.append(str(production_rag_system_path))
-
-from production_rag_system import create_production_rag_system, QueryRequest
+from production_rag_system.validation.models import QueryRequest
+from production_rag_system.config.settings import Settings
+from production_rag_system.core.rag_system import create_production_rag_system
 
 
 def main():
@@ -26,7 +23,8 @@ def main():
     try:
         # 1. Create RAG system with default settings
         print("1. Creating RAG system...")
-        rag = create_production_rag_system()
+        rag = create_production_rag_system(Settings(
+            persist_dir="./chroma_db_example"))
         print("✅ RAG system created successfully")
         
         # 2. Check system health

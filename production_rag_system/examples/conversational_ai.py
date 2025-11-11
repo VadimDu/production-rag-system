@@ -11,27 +11,81 @@ This example demonstrates how to use the Production RAG System for conversationa
 import sys
 from pathlib import Path
 
-# Add the parent directory to the path so we can import the module
-#sys.path.append(str(Path(__file__).parent.parent))
-production_rag_system_path = Path.home()/"biotax/analysis"
-sys.path.append(str(production_rag_system_path))
-
-from production_rag_system import create_production_rag_system, QueryRequest
+from production_rag_system.validation.models import QueryRequest
+from production_rag_system.config.settings import Settings
+from production_rag_system.core.rag_system import create_production_rag_system
 
 
 def main():
     """Run conversational AI example"""
     print("🎯 Production RAG System - Conversational AI Example")
     print("=" * 50)
-    
+
+    # Get the directory where this script is located
+    script_dir = Path(__file__).parent.absolute()
+
     try:
         # 1. Create RAG system
         print("1. Creating RAG system...")
-        rag = create_production_rag_system()
+        settings = Settings(
+            persist_dir=str(script_dir / "chroma_db_example"),
+            log_file=str(script_dir / "rag_system.log"),
+            chunk_size_threshold=500,
+            chunk_overlap_ratio=0.2,
+            log_level="INFO"
+        )
+        rag = create_production_rag_system(settings)
         print("✅ RAG system created successfully")
-        
+
         # 2. Check system health
         print("\n2. Checking system health...")
+        health = rag.get_system_health()
+        print(f"✅ System health: {health['overall']}")
+        print(f"   - Vector DB: {health['vector_db']}")
+        print(f"   - Embedding Model: {health['embedding_model']}")
+        print(f"   - LLM Connection: {health['llm_connection']}")
+        
+        # Build vector database from documents
+        print("\n3. Building vector database from documents...")
+        
+        # Define document paths (relative to script location)
+        document_paths = [
+            str(script_dir / "test_docs")  # Directory containing documents
+        ]
+        
+        # Check if documents directory exists
+        docs_dir = script_dir / "test_docs"
+        if not docs_dir.exists():
+            print(f"❌ Documents directory not found: {docs_dir}")
+            print("   Please create a 'test_docs' directory in the examples folder and add your documents")
+            print("   Supported formats: .txt, .md, .pdf, .docx")
+            return False
+        
+        # List available documents
+        available_docs = []
+        for ext in [".txt", ".md", ".pdf", ".docx"]:
+            available_docs.extend(docs_dir.glob(f"**/*{ext}"))
+        
+        if not available_docs:
+            print("❌ No documents found in the test_docs directory")
+            print(f"   Directory contents: {list(docs_dir.iterdir()) if docs_dir.exists() else 'Directory does not exist'}")
+            print("   Please add some documents (txt, md, pdf, or docx) to the examples/test_docs folder")
+            return False
+
+        # Build vector database
+        vectordb = rag.build_vector_db_from_docs(document_paths, skip_duplicates=True)
+        
+        if vectordb:
+            print("✅ Vector database built successfully")
+            
+            # Check document count
+            docs_data = rag.list_existing_documents()
+            print(f"   - Document chunks: {len(docs_data['ids'])}")
+        else:
+            print("❌ Failed to build vector database")
+            return False
+
+        print("\n2. Checking system health again...")
         health = rag.get_system_health()
         if not health["overall"] or not health["vector_db"]:
             print("❌ System not ready for conversational queries")
@@ -44,7 +98,8 @@ def main():
         conversation = [
             "What is artificial intelligence?",
             "What are the main types of machine learning?",
-            "How does deep learning differ from traditional machine learning?"
+            "How does deep learning differ from traditional machine learning?",
+            "What are the differences between prefill vs decode stages in LLMs?",
         ]
         
         for i, question in enumerate(conversation, 1):
@@ -67,7 +122,7 @@ def main():
         
         # 5. Save conversation history
         print("\n5. Saving conversation history...")
-        save_path = "./examples/conversations/ai_discussion_buffer.json"
+        save_path = str(script_dir/"conversations/ai_discussion_buffer.json")
         success = rag.save_conversation_history(
             file_path=save_path,
             retriever_type="vec_semantic",
@@ -107,7 +162,7 @@ def main():
         
         # 8. Save summary conversation
         print("\n8. Saving summary conversation history...")
-        save_path = "./examples/conversations/ai_discussion_summary.json"
+        save_path = str(script_dir/"conversations/ai_discussion_summary.json")
         success = rag.save_conversation_history(
             file_path=save_path,
             retriever_type="vec_semantic",
@@ -120,7 +175,7 @@ def main():
         
         # 9. Demonstrate loading a conversation
         print("\n9. Loading conversation from disk...")
-        load_path = "./examples/conversations/ai_discussion_buffer.json"
+        load_path = str(script_dir/"conversations/ai_discussion_buffer.json")
         success = rag.load_conversation_history(
             file_path=load_path,
             retriever_type="vec_semantic",
@@ -163,8 +218,12 @@ def main():
 
 
 if __name__ == "__main__":
-    # Create conversations directory if it doesn't exist
-    Path("./examples/conversations").mkdir(parents=True, exist_ok=True)
+    # Get the script directory for creating relative paths
+    script_dir = Path(__file__).parent.absolute()
     
+    # Create directories relative to script location
+    (script_dir / "chroma_db_example").mkdir(parents=True, exist_ok=True)
+    (script_dir/"conversations").mkdir(parents=True, exist_ok=True)
+
     success = main()
     sys.exit(0 if success else 1)
