@@ -2,6 +2,47 @@
 
 A modular, production-ready Retrieval-Augmented Generation (RAG) system with comprehensive error handling, input validation, and monitoring capabilities.
 
+## Table of Contents
+
+- [Production RAG System - Overview](#production-rag-system---overview)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation types](#installation-types)
+    - [Standard Installation](#standard-installation)
+    - [From Source](#from-source)
+  - [⚠️ Important: LLM Backend Required](#️-important-llm-backend-required)
+    - [What You Need](#what-you-need)
+    - [Quick LLM Setup (LM Studio)](#quick-llm-setup-lm-studio)
+      - [Step 1: Install LM Studio](#step-1-install-lm-studio)
+      - [Step 2: Download a Language Model](#step-2-download-a-language-model)
+      - [Step 3: Load the Model](#step-3-load-the-model)
+      - [Step 4: Start the Local Server](#step-4-start-the-local-server)
+      - [Step 5: Configure the RAG System](#step-5-configure-the-rag-system)
+      - [Step 6: Verify Connection](#step-6-verify-connection)
+  - [Quick Start](#quick-start)
+    - [Basic Usage](#basic-usage)
+    - [Conversational Queries](#conversational-queries)
+    - [Web Interface](#web-interface)
+  - [Configuration](#configuration)
+    - [Example Settings](#example-settings)
+    - [Environment Variables](#environment-variables)
+  - [Architecture](#architecture)
+  - [Supported Document Formats](#supported-document-formats)
+  - [LLM Providers](#llm-providers)
+  - [Examples](#examples)
+  - [Performance Monitoring](#performance-monitoring)
+  - [Error Handling](#error-handling)
+  - [Advanced Usage](#advanced-usage)
+    - [Custom Retrievers](#custom-retrievers)
+    - [Memory Management](#memory-management)
+    - [Document Processing](#document-processing)
+  - [Requirements](#requirements)
+  - [License](#license)
+  - [Contributing](#contributing)
+  - [Support](#support)
+  - [Changelog](#changelog)
+    - [Version 1.0.0](#version-100)
+
 ## Features
 
 - **Modular Architecture**: Clean separation of concerns with 9 specialized modules
@@ -62,23 +103,26 @@ Here's a complete step-by-step guide to get your local LLM running with LM Studi
    - **Qwen2.5-7B-Instruct**
    - **Llama-3.1-8B-Instruct** 
    - **Mistral-7B-Instruct**
-   - ** **
+   - **gpt-oss-20b**
+   - **Qwen3-30B-A3B**
+
 3. Wait for the download to complete
 
 #### Step 3: Load the Model
 1. Go to the "Chat" tab
-2. Select your downloaded model from the dropdown
+2. Select your downloaded model from the dropdown (you can also configure it as needed)
 3. Click "Load" to load the model into memory (this may take a few minutes)
 4. Test the model by sending a simple message like "Hello"
 
 #### Step 4: Start the Local Server
-1. Click on the "Local Server" tab (or go to Menu → Preferences → Local Server)
+1. Click on the "Developer" tab and make sure the model status is "Running" and "READY"
 2. Set the following configuration:
    - **Server URL**: `http://localhost:1234/v1` (default)
    - **Model**: Select the model you loaded
    - **Context Length**: 4096 (or higher if your model supports it)
 3. Click "Start Server"
-4. You should see "Server is running on http://localhost:1234/v1"
+4. You should see "The local server is reachable at this address: http://localhost:1234/v1" or (http://127.0.0.1:1234)
+5. Copy the exact model's API identifier name (e.g. `qwen/qwen3-next-80b`)
 
 #### Step 5: Configure the RAG System
 The system will automatically connect to `http://localhost:1234/v1` with these default settings:
@@ -122,6 +166,8 @@ print(f"LLM Connection: {'✅ Working' if health['llm_connection'] else '❌ Fai
 
 ### Basic Usage
 
+You can check the several ready-to-run examples here: `production_rag_system/examples/`
+
 ```python
 from production_rag_system import create_production_rag_system, QueryRequest
 
@@ -158,14 +204,9 @@ print(f"Conversation History:\n{history}")
 
 ### Web Interface
 
-Launch the web interface:
+You can find a comprehensive guide for using the Streamlit Web App here: `production_rag_system/web_app/README.md`
 
-```bash
-rag-web
-```
-
-Or run directly:
-
+Launch directly with `streamlit`
 ```bash
 streamlit run production_rag_system/web_app/app.py
 ```

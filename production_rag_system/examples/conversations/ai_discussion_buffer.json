@@ -24,7 +24,7 @@
     },
     {
       "type": "ai",
-      "content": "Deep learning differs from traditional machine learning in that it uses neural networks with multiple layers to process complex patterns. Traditional machine learning, as a subset of AI, enables systems to learn and improve from experience, but typically relies on feature engineering and simpler models. Deep learning automates feature extraction through its layered neural networks, allowing it to handle more complex and high-dimensional data such as images, audio, and text."
+      "content": "Deep learning differs from traditional machine learning in that it uses neural networks with multiple layers to process complex patterns. Traditional machine learning, as a subset of AI, enables systems to learn and improve from experience, but typically relies on feature engineering and simpler models. Deep learning automates feature extraction through its layered neural network architecture, allowing it to handle more complex and unstructured data such as images, audio, and text."
     },
     {
       "type": "human",
@@ -35,5 +35,5 @@
       "content": "The main difference between the prefill and decode stages in large language models (LLMs) is that the prefill stage processes the entire input prompt in parallel to build a KV cache, while the decode stage generates output tokens one by one, using the pre-computed KV cache. \n\nPrefill is compute-bound because it performs heavy calculations on all input tokens, while decode is memory-bound, relying on fast memory access to retrieve the KV cache for each new token generated."
     }
   ],
-  "timestamp": 1762781348.3791108
+  "timestamp": 1762855953.643877
 }

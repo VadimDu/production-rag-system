@@ -10,6 +10,10 @@ This example demonstrates advanced retrieval features of the Production RAG Syst
 
 import sys
 from pathlib import Path
+import time
+from langchain.retrievers import EnsembleRetriever
+from langchain_community.retrievers import BM25Retriever
+from langchain.docstore.document import Document
 
 from production_rag_system.validation.models import QueryRequest
 from production_rag_system.config.settings import Settings
@@ -103,7 +107,7 @@ def main():
         # 4. Compare retrieval results
         print("\n4. Comparing retrieval results...")
         test_query = QueryRequest(
-            question="What is machine learning?",
+            question="What is machine learning and how does how does deep learning differ from traditional machine learning?",
             retriever_type="vec_semantic"
         )
         
@@ -182,11 +186,7 @@ def main():
         print("\n8. Testing ensemble retriever with different weights...")
         
         if "ensemble" in retrievers:
-            # Create custom ensemble retriever
-            from langchain.retrievers import EnsembleRetriever
-            from langchain_community.retrievers import BM25Retriever
-            from langchain.docstore.document import Document
-            
+            # Create custom ensemble retriever           
             # Get documents from vector store
             docs_data = rag.vectordb.get()
             if docs_data['documents']:
@@ -235,8 +235,6 @@ def main():
         # 9. Performance comparison
         print("\n9. Performance comparison...")
         
-        from time import time
-        
         # Test each retriever type for performance
         performance_results = {}
         
@@ -249,9 +247,9 @@ def main():
             )
             
             # Measure time
-            start_time = time.time()
+            start_time = time.perf_counter()
             result = rag.process_query(query)
-            end_time = time.time()
+            end_time = time.perf_counter()
             
             execution_time = end_time - start_time
             performance_results[retriever_type] = execution_time

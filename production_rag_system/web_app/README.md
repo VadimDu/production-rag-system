@@ -2,6 +2,35 @@
 
 A web interface for the Production RAG System that allows you to easily query your documents using natural language, manage conversations, and monitor system health.
 
+## Table of Contents
+
+- [Production RAG System - Streamlit Web App](#production-rag-system---streamlit-web-app)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#quick-start)
+    - [Option 1: Running directly from the parent directory (recommended)](#option-1-running-directly-from-the-parent-directory-recommended)
+    - [Option 2: Running with explicit Python path (if import conflicts occur)](#option-2-running-with-explicit-python-path-if-import-conflicts-occur)
+  - [Usage Guide](#usage-guide)
+    - [1. Initialize the System](#1-initialize-the-system)
+    - [2. Add Documents (if needed)](#2-add-documents-if-needed)
+    - [3. Query Your Documents](#3-query-your-documents)
+    - [4. Manage Conversations](#4-manage-conversations)
+    - [5. Monitor System](#5-monitor-system)
+  - [Configuration](#configuration)
+    - [1. Web Interface Configuration (Recommended)](#1-web-interface-configuration-recommended)
+    - [2. Traditional Configuration](#2-traditional-configuration)
+    - [Configuration Workflow:](#configuration-workflow)
+  - [Troubleshooting](#troubleshooting)
+    - [Import Error: "attempted relative import beyond top-level package"](#import-error-attempted-relative-import-beyond-top-level-package)
+    - [System Initialization Issues](#system-initialization-issues)
+    - [Document Processing Issues](#document-processing-issues)
+    - [Query Issues](#query-issues)
+  - [Development](#development)
+  - [File Structure](#file-structure)
+  - [Support](#support)
+  - [License](#license)
+
 ## Features
 
 - 🤖 **Natural Language Querying**: Ask questions about your documents and get intelligent answers
@@ -16,26 +45,16 @@ Make sure you have the Production RAG System installed and working (follow the i
 
 ## Quick Start
 
-### Option 1: Using the launcher script (recommended)
-```bash
-python run_app.py
-```
-
-### Option 2: Running directly from the parent directory
+### Option 1: Running directly from the parent directory (recommended)
 ```bash
 cd production_rag_system
 streamlit run web_app/app.py
 ```
 
-### Option 3: Running with explicit Python path (if import conflicts occur)
+### Option 2: Running with explicit Python path (if import conflicts occur)
 ```bash
 cd production_rag_system/web_app
 PYTHONPATH=.. streamlit run app.py
-```
-
-### Option 4: Running from the analysis directory
-```bash
-streamlit run production_rag_system/web_app/app.py
 ```
 
 The web app will open in your browser at `http://localhost:8501`
